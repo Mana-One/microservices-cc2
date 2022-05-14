@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-05-14T20:02:41.255398+02:00[Europe/Paris]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-05-14T23:00:37.861834+02:00[Europe/Paris]")
 @Validated
 @Tag(name = "payments", description = "the payments API")
 public interface PaymentsApi {
@@ -45,7 +45,7 @@ public interface PaymentsApi {
      * @param initiatePaymentProcess Body of a request to start a payment process (required)
      * @return Request accepted (status code 202)
      *         or Bad Request (status code 404)
-     *         or unexpected error (status code 200)
+     *         or unexpected error (status code 500)
      */
     @Operation(
         operationId = "initiatePaymentProcess",
@@ -54,7 +54,7 @@ public interface PaymentsApi {
         responses = {
             @ApiResponse(responseCode = "202", description = "Request accepted"),
             @ApiResponse(responseCode = "404", description = "Bad Request", content = @Content(mediaType = "application/json", schema = @Schema(implementation =  Error.class))),
-            @ApiResponse(responseCode = "200", description = "unexpected error", content = @Content(mediaType = "application/json", schema = @Schema(implementation =  Error.class)))
+            @ApiResponse(responseCode = "500", description = "unexpected error", content = @Content(mediaType = "application/json", schema = @Schema(implementation =  Error.class)))
         }
     )
     @RequestMapping(

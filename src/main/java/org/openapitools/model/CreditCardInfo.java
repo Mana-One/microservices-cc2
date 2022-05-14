@@ -18,7 +18,7 @@ import javax.annotation.Generated;
  * CreditCardInfo
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-05-14T20:02:41.255398+02:00[Europe/Paris]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-05-14T23:00:37.861834+02:00[Europe/Paris]")
 public class CreditCardInfo   {
 
   @JsonProperty("provider")

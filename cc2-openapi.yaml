@@ -29,7 +29,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-        default:
+        '500':
           description: unexpected error
           content:
             application/json:
