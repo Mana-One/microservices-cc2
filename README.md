@@ -1,6 +1,6 @@
 # Project for the Microservices course at the ESGI, Paris, FRANCE
 
-Class: 4AL1
+Class: 4AL1  
 Students:  
 + Paul BARRIE
 + Paolo MANAOIS
