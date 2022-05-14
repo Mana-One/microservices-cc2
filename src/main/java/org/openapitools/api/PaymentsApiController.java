@@ -1,10 +1,20 @@
 package org.openapitools.api;
 
+import org.openapitools.model.InitiatePaymentProcess;
 import org.springframework.stereotype.Controller;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
+
+import io.swagger.v3.oas.annotations.Parameter;
+
 import java.util.Optional;
+import javax.validation.Valid;
 import javax.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-05-14T23:00:37.861834+02:00[Europe/Paris]")
@@ -13,10 +23,15 @@ import javax.annotation.Generated;
 public class PaymentsApiController implements PaymentsApi {
 
     private final NativeWebRequest request;
+    private final IdempotenceLayer idempotenceLayer;
 
     @Autowired
-    public PaymentsApiController(NativeWebRequest request) {
+    public PaymentsApiController(
+        NativeWebRequest request,
+        IdempotenceLayer idempotenceLayer
+    ) {
         this.request = request;
+        this.idempotenceLayer = idempotenceLayer;
     }
 
     @Override
@@ -24,4 +39,17 @@ public class PaymentsApiController implements PaymentsApi {
         return Optional.ofNullable(request);
     }
 
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = "/payments",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    @Override
+    public ResponseEntity<Void> initiatePaymentProcess(
+        @Parameter(name = "InitiatePaymentProcess", description = "Body of a request to start a payment process", required = true, schema = @Schema(description = "")) @Valid @RequestBody InitiatePaymentProcess initiatePaymentProcess
+    ) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
 }
