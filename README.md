@@ -1,3 +1,11 @@
+# Project for the Microservices course at the ESGI, Paris, FRANCE
+
+Class: 4AL1  
+Students:  
++ Paul BARRIE
++ Paolo MANAOIS
++ Adem MRIZAK
+
 # OpenAPI generated server
 
 Spring Boot Server
@@ -14,3 +22,6 @@ You can view the api documentation in swagger-ui by pointing to
 http://localhost:8080/
 
 Change default port value in application.properties
+
+## TODO  
+[Sequence Diagrams HERE]
