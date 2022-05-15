@@ -49,7 +49,14 @@ public class PaymentsApiController implements PaymentsApi {
     public ResponseEntity<Void> initiatePaymentProcess(
         @Parameter(name = "InitiatePaymentProcess", description = "Body of a request to start a payment process", required = true, schema = @Schema(description = "")) @Valid @RequestBody InitiatePaymentProcess initiatePaymentProcess
     ) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
+        var check = idempotenceLayer.isStarted(initiatePaymentProcess);
+        if (!check) {
+            System.out.println("\nRedis miss !\n");
+            // DO APP LOGIC HERE
+            idempotenceLayer.addEntry(initiatePaymentProcess);
+        } else {
+            System.out.println("\nRedis hit !\n");
+        }
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
