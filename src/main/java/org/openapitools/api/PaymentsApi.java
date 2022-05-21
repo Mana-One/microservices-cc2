@@ -53,7 +53,7 @@ public interface PaymentsApi {
         tags = { "payments" },
         responses = {
             @ApiResponse(responseCode = "202", description = "Request accepted"),
-            @ApiResponse(responseCode = "404", description = "Bad Request", content = @Content(mediaType = "application/json", schema = @Schema(implementation =  Error.class))),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = "application/json", schema = @Schema(implementation =  Error.class))),
             @ApiResponse(responseCode = "500", description = "unexpected error", content = @Content(mediaType = "application/json", schema = @Schema(implementation =  Error.class)))
         }
     )

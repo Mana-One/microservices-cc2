@@ -20,7 +20,7 @@ paths:
       responses:
         "202":
           description: Request accepted
-        "404":
+        "400":
           content:
             application/json:
               schema:

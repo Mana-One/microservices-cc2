@@ -21,7 +21,31 @@ Start your server as a simple java application
 You can view the api documentation in swagger-ui by pointing to
 http://localhost:8080/
 
-Change default port value in application.properties
+Change default port value in application.properties  
 
-## TODO  
-[Sequence Diagrams HERE]
+
+## Launch app  
+The app uses Redis as the idempotency layer, the recommended way to launch the app is to use the docker-compose config since it is set up for you.  
+
+If you have never built the app before, run:  
+```
+mvn clean package && docker-compose build
+```
+
+To launch the app, run:  
+```
+docker-compose up [-d] # ignore the -d option if you directly want to see the output of the api
+```
+
+## Sequence diagrams  
+In this case, we suppose that the payment process is directly handled by our system. We could imagine, in another scenario, that a 3rd party payment is integrated to the payment service, in which case there would be a 4th system in the diagrams.  
+
+
+### Payment not processed yet  
+![Payment not processed diagram](./docs/Idempotency-miss.png)  
+
+### Payment already processed  
+![Payment already processed diagram](./docs/Idempotency-hit.png)  
+
+### Bad request due to invalid request payload  
+![Bad request diagram](./docs/Bad-request.png)

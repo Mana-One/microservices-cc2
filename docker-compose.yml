@@ -1,0 +1,36 @@
+
+version: '3.6'
+services:
+  cc2-redis:
+    image: "redis:alpine3.15"
+    container_name: "cc2-redis"
+    hostname: "cc2-redis"
+    environment:
+      - REDIS_PASSWORD
+    command: [
+      "sh", "-c",
+      'docker-entrypoint.sh --appendonly yes --requirepass "$$REDIS_PASSWORD"'
+    ]
+    environment:
+      - REDIS_PASSWORD
+    volumes:
+      - cc2-redis-data:/data
+
+  microservices-cc2:
+    build: .
+    image: "microservices-cc2:latest"
+    container_name: "microservices-cc2"
+    depends_on:
+      - cc2-redis
+    command: sh -c "./wait && java org.springframework.boot.loader.JarLauncher"
+    ports:
+      - "8080:8080"
+    environment:
+      - WAIT_HOSTS=cc2-redis:6379
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+      - REDIS_URL
+
+volumes:
+  cc2-redis-data:

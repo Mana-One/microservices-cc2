@@ -23,12 +23,12 @@ import javax.annotation.Generated;
 public class PaymentsApiController implements PaymentsApi {
 
     private final NativeWebRequest request;
-    private final IdempotenceLayer idempotenceLayer;
+    private final IdempotencyLayer idempotenceLayer;
 
     @Autowired
     public PaymentsApiController(
         NativeWebRequest request,
-        IdempotenceLayer idempotenceLayer
+        IdempotencyLayer idempotenceLayer
     ) {
         this.request = request;
         this.idempotenceLayer = idempotenceLayer;

@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisPool;
 
 @Component
-public final class IdempotenceLayer implements DisposableBean {
+public final class IdempotencyLayer implements DisposableBean {
     private static final String STARTED = "started";
     private JedisPool pool;
 
     @Autowired
-    public IdempotenceLayer(JedisPool pool) {
+    public IdempotencyLayer(JedisPool pool) {
         this.pool = pool;
     }
 

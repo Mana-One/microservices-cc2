@@ -2,3 +2,5 @@ target
 .openapi-generator
 .openapi-generator-ignore
 .vscode
+.env*
+.DS_Store
