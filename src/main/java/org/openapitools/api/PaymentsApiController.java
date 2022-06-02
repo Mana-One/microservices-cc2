@@ -1,6 +1,7 @@
 package org.openapitools.api;
 
 import org.openapitools.model.InitiatePaymentProcess;
+import org.openapitools.model.InitiatePaymentProcessResponse;
 import org.springframework.stereotype.Controller;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 
 import io.swagger.v3.oas.annotations.Parameter;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import javax.validation.Valid;
 import javax.annotation.Generated;
@@ -46,17 +48,21 @@ public class PaymentsApiController implements PaymentsApi {
         consumes = { "application/json" }
     )
     @Override
-    public ResponseEntity<Void> initiatePaymentProcess(
+    public ResponseEntity<InitiatePaymentProcessResponse> initiatePaymentProcess(
         @Parameter(name = "InitiatePaymentProcess", description = "Body of a request to start a payment process", required = true, schema = @Schema(description = "")) @Valid @RequestBody InitiatePaymentProcess initiatePaymentProcess
     ) {
-        var check = idempotenceLayer.isStarted(initiatePaymentProcess);
-        if (!check) {
+        var payload = idempotenceLayer.retrieve(initiatePaymentProcess.getCheckoutId());
+        if (payload.isEmpty()) {
             System.out.println("\nRedis miss !\n");
             // DO APP LOGIC HERE
-            idempotenceLayer.addEntry(initiatePaymentProcess);
-        } else {
-            System.out.println("\nRedis hit !\n");
+            var data = new InitiatePaymentProcessResponse();
+            data.setSince(LocalDateTime.now().toString());
+            data.setStatus(InitiatePaymentProcessResponse.STARTED);
+            idempotenceLayer.addEntry(initiatePaymentProcess.getCheckoutId(), data);
+            return ResponseEntity.accepted().body(data);
         }
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+
+        System.out.println("\nRedis hit !\n");
+        return ResponseEntity.accepted().body(payload.get());
     }
 }

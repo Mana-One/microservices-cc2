@@ -7,6 +7,7 @@ package org.openapitools.api;
 
 import org.openapitools.model.Error;
 import org.openapitools.model.InitiatePaymentProcess;
+import org.openapitools.model.InitiatePaymentProcessResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -30,7 +31,7 @@ import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-05-14T23:00:37.861834+02:00[Europe/Paris]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-06-02T23:18:38.798271+02:00[Europe/Paris]")
 @Validated
 @Tag(name = "payments", description = "the payments API")
 public interface PaymentsApi {
@@ -44,7 +45,7 @@ public interface PaymentsApi {
      *
      * @param initiatePaymentProcess Body of a request to start a payment process (required)
      * @return Request accepted (status code 202)
-     *         or Bad Request (status code 404)
+     *         or Bad Request (status code 400)
      *         or unexpected error (status code 500)
      */
     @Operation(
@@ -52,7 +53,7 @@ public interface PaymentsApi {
         summary = "Initiate a payment process",
         tags = { "payments" },
         responses = {
-            @ApiResponse(responseCode = "202", description = "Request accepted"),
+            @ApiResponse(responseCode = "202", description = "Request accepted", content = @Content(mediaType = "application/json", schema = @Schema(implementation =  InitiatePaymentProcessResponse.class))),
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = "application/json", schema = @Schema(implementation =  Error.class))),
             @ApiResponse(responseCode = "500", description = "unexpected error", content = @Content(mediaType = "application/json", schema = @Schema(implementation =  Error.class)))
         }
@@ -63,9 +64,18 @@ public interface PaymentsApi {
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<Void> initiatePaymentProcess(
+    default ResponseEntity<InitiatePaymentProcessResponse> initiatePaymentProcess(
         @Parameter(name = "InitiatePaymentProcess", description = "Body of a request to start a payment process", required = true, schema = @Schema(description = "")) @Valid @RequestBody InitiatePaymentProcess initiatePaymentProcess
     ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"status\" : \"status\", \"since\" : \"since\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

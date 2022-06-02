@@ -15,54 +15,55 @@ import java.util.*;
 import javax.annotation.Generated;
 
 /**
- * Error
+ * InitiatePaymentProcessResponse
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-06-02T23:18:38.798271+02:00[Europe/Paris]")
-public class Error   {
+public class InitiatePaymentProcessResponse   {
+  final public static String STARTED = "started";
 
-  @JsonProperty("code")
-  private Integer code;
+  @JsonProperty("status")
+  private String status;
 
-  @JsonProperty("message")
-  private String message;
+  @JsonProperty("since")
+  private String since;
 
-  public Error code(Integer code) {
-    this.code = code;
+  public InitiatePaymentProcessResponse status(String status) {
+    this.status = status;
     return this;
   }
 
   /**
-   * Get code
-   * @return code
+   * Get status
+   * @return status
   */
   @NotNull 
-  @Schema(name = "code", required = true)
-  public Integer getCode() {
-    return code;
+  @Schema(name = "status", required = true)
+  public String getStatus() {
+    return status;
   }
 
-  public void setCode(Integer code) {
-    this.code = code;
+  public void setStatus(String status) {
+    this.status = status;
   }
 
-  public Error message(String message) {
-    this.message = message;
+  public InitiatePaymentProcessResponse since(String since) {
+    this.since = since;
     return this;
   }
 
   /**
-   * Get message
-   * @return message
+   * Get since
+   * @return since
   */
   @NotNull 
-  @Schema(name = "message", required = true)
-  public String getMessage() {
-    return message;
+  @Schema(name = "since", required = true)
+  public String getSince() {
+    return since;
   }
 
-  public void setMessage(String message) {
-    this.message = message;
+  public void setSince(String since) {
+    this.since = since;
   }
 
   @Override
@@ -73,22 +74,22 @@ public class Error   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Error error = (Error) o;
-    return Objects.equals(this.code, error.code) &&
-        Objects.equals(this.message, error.message);
+    InitiatePaymentProcessResponse initiatePaymentProcessResponse = (InitiatePaymentProcessResponse) o;
+    return Objects.equals(this.status, initiatePaymentProcessResponse.status) &&
+        Objects.equals(this.since, initiatePaymentProcessResponse.since);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, message);
+    return Objects.hash(status, since);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Error {\n");
-    sb.append("    code: ").append(toIndentedString(code)).append("\n");
-    sb.append("    message: ").append(toIndentedString(message)).append("\n");
+    sb.append("class InitiatePaymentProcessResponse {\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    since: ").append(toIndentedString(since)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -18,7 +18,7 @@ import javax.annotation.Generated;
  * PaymentOrder
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-05-14T23:00:37.861834+02:00[Europe/Paris]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-06-02T23:18:38.798271+02:00[Europe/Paris]")
 public class PaymentOrder   {
 
   @JsonProperty("seller_account")

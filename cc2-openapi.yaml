@@ -23,6 +23,10 @@ paths:
       responses:
         '202':
           description: Request accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InitiatePaymentProcessResponse"
         '400':
           description: Bad Request
           content:
@@ -95,6 +99,17 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/PaymentOrder"
+
+    InitiatePaymentProcessResponse:
+      type: object
+      required: 
+        - status
+        - since
+      properties:
+        status:
+          type: string
+        since: 
+          type: string
 
     Error:
       type: object

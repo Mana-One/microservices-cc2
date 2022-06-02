@@ -3,8 +3,10 @@ package org.openapitools.api;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.openapitools.model.InitiatePaymentProcess;
+import org.openapitools.model.InitiatePaymentProcessResponse;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,11 +23,11 @@ public final class IdempotencyLayer implements DisposableBean {
         this.pool = pool;
     }
 
-    public void addEntry(InitiatePaymentProcess initiatePaymentProcess) {
-        String key = String.format("payment:%s", initiatePaymentProcess.getCheckoutId());
+    public void addEntry(String idempotencyKey, InitiatePaymentProcessResponse initiatePaymentProcessResponse) {
+        String key = String.format("payment:%s", idempotencyKey);
         Map<String, String> payload = new HashMap<>();
-        payload.put("status", STARTED);
-        payload.put("start", LocalDateTime.now().toString());
+        payload.put("status", initiatePaymentProcessResponse.getStatus());
+        payload.put("since", initiatePaymentProcessResponse.getSince());
 
         try (var jedis = pool.getResource()) {
             jedis.hset(key, payload);
@@ -33,13 +35,20 @@ public final class IdempotencyLayer implements DisposableBean {
         } 
     }
 
-    public boolean isStarted(InitiatePaymentProcess initiatePaymentProcess) {
-        String key = String.format("payment:%s", initiatePaymentProcess.getCheckoutId());
+    public Optional<InitiatePaymentProcessResponse> retrieve(String idempotencyKey) {
+        String key = String.format("payment:%s", idempotencyKey);
 
-        var result = false;
+        Optional<InitiatePaymentProcessResponse> result = Optional.empty();
         try (var jedis = pool.getResource()) {
+            String since = jedis.hget(key, "since");
             String status = jedis.hget(key, "status");
-            result = status != null && status.equals(STARTED);
+            
+            if (since != null && status != null) {
+                var data = new InitiatePaymentProcessResponse();
+                data.setSince(since);
+                data.setStatus(status);
+                result = Optional.of(data);
+            }
         }
         return result;
     }
