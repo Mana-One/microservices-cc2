@@ -27,7 +27,13 @@ Change default port value in application.properties
 ## Launch app  
 The app uses Redis as the idempotency layer, the recommended way to launch the app is to use the docker-compose config since it is set up for you.  
 
-If you have never built the app before, run:  
+Add a .env file in the root of the project with the following entries:  
+```
+REDIS_PASSWORD=<some password>
+REDIS_URL=redis://:<same password as above>@cc2-redis:6379
+```
+
+If you have never built the app before or you have modified it, run:  
 ```
 mvn clean package && docker-compose build
 ```
